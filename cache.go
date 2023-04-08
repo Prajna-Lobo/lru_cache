@@ -3,6 +3,7 @@ package lru_cache
 import (
 	"container/list"
 	"errors"
+	"fmt"
 )
 
 type LRUCache struct {
@@ -19,6 +20,7 @@ type Pair struct {
 type ILRUCache interface {
 	Put(key string, value string)
 	Get(key string) (string, error)
+	Print()
 }
 
 func newLRUCache(capacity int) ILRUCache {
@@ -62,4 +64,11 @@ func (c *LRUCache) Get(key string) (string, error) {
 	}
 
 	return "", errors.New("key not found")
+}
+
+func (c *LRUCache) Print() {
+	for item := c.list.Front(); item != nil; item.Next() {
+		fmt.Println("key", item.Value.(Pair).key)
+		fmt.Println("value", item.Value.(Pair).value)
+	}
 }
