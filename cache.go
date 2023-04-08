@@ -6,24 +6,32 @@ import (
 	"fmt"
 )
 
+/* LRUCache
+data is a map to hold the elements
+list to order the data in access order
+capacity length of LRU cache
+*/
+
 type LRUCache struct {
 	capacity int
 	list     *list.List
 	data     map[string]string
 }
 
+// Pair Data structure to hold the data in list
 type Pair struct {
 	key   string
 	value string
 }
 
+// ILRUCache ...
 type ILRUCache interface {
 	Put(key string, value string)
 	Get(key string) (string, error)
 	Print()
 }
 
-func newLRUCache(capacity int) ILRUCache {
+func NewLRUCache(capacity int) ILRUCache {
 	return &LRUCache{
 		capacity: capacity,
 		list:     list.New(),
@@ -66,6 +74,7 @@ func (c *LRUCache) Get(key string) (string, error) {
 	return "", errors.New("key not found")
 }
 
+// Print prints the list items
 func (c *LRUCache) Print() {
 	for item := c.list.Front(); item != nil; item.Next() {
 		fmt.Println("key", item.Value.(Pair).key)
